@@ -32,13 +32,4 @@ function createUser($countUser)
 }
 
 
-//for ($i = 0; $i < 10000; $i++):
-//    $userTest = new UserTest();
-//    $userTest->login = $faker->userName;
-//    $userTest->password = password_hash($faker->md5, PASSWORD_DEFAULT);
-//    $userTest->first_name = $faker->firstNameMale;
-//    $userTest->last_name = $faker->lastName;
-//    $userTest->email = $faker->email;
-//    $userTest->save();
-//endfor;
-//
+//Новая ветка MD-327
