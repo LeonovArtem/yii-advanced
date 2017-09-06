@@ -1,53 +1,44 @@
 <?php
 
-/* @var $this yii\web\View */
+use Faker\Factory as Faker;
+use common\models\UserTest;
 
-$this->title = 'My Yii Application';
+
+$this->title = 'Test';
 ?>
-<div class="site-index">
+<?php
+$users = createUser(10000);
+// table name, column names, column values
+Yii::$app->db->createCommand()->batchInsert('user_test',
+    ['login', 'password', 'first_name', 'last_name', 'email'],
+    $users)->execute(Yii::$app->db->close());
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+function createUser($countUser)
+{
+    $arrUser = [];
+    $faker = Faker::create('ru_RU');
+    for ($i = 0; $i < $countUser; $i++) {
+        $arrUser[] =
+            [
+                'login' => $faker->userName,
+                'password ' => password_hash($faker->md5, PASSWORD_DEFAULT),
+                'first_name ' => $faker->firstNameMale,
+                'last_name ' => $faker->lastName,
+                'email ' => $faker->email,
+            ];
+    }
+    return $arrUser;
+}
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
-</div>
+//for ($i = 0; $i < 10000; $i++):
+//    $userTest = new UserTest();
+//    $userTest->login = $faker->userName;
+//    $userTest->password = password_hash($faker->md5, PASSWORD_DEFAULT);
+//    $userTest->first_name = $faker->firstNameMale;
+//    $userTest->last_name = $faker->lastName;
+//    $userTest->email = $faker->email;
+//    $userTest->save();
+//endfor;
+//
